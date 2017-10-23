@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  api:string;
+  myData:Array<any>;
+  constructor(private http:Http){
+    this.api = 'https://jsonplaceholder.typicode.com/photos';
+    this.http.get(this.api)
+      .map(response => response.json())
+      .subscribe(res => this.myData = res);
+  }
 }
